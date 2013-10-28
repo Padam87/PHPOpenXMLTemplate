@@ -6,7 +6,7 @@ use \SplFileInfo;
 use \FilesystemIterator;
 use \RecursiveIteratorIterator;
 use \RecursiveDirectoryIterator;
-use Symfony\Component\HttpFoundation\File\Exception\UnexpectedTypeException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use PHPOpenXMLTemplate\Configuration;
 
 /**
@@ -29,7 +29,7 @@ class ExtractedTemplate extends AbstractTemplate implements TemplateInterface
         parent::__construct($config, $path);
 
         if (!$this->isDir()) {
-            throw new UnexpectedTypeException(sprintf('"%" is not a valid extracted OpenXML file.', $path));
+            throw new FileException(sprintf('"%" is not a valid extracted OpenXML file.', $path));
         }
     }
 

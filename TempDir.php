@@ -3,7 +3,7 @@
 namespace PHPOpenXMLTemplate;
 
 use \SplFileInfo;
-use Symfony\Component\HttpFoundation\File\Exception\UnexpectedTypeException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 /**
  * Temp directory
@@ -15,11 +15,11 @@ class TempDir extends SplFileInfo
         parent::__construct(realpath($path));
 
         if (!$this->isDir()) {
-            throw new UnexpectedTypeException(sprintf('"%" is not a directory.', $path));
+            throw new FileException(sprintf('"%" is not a directory.', $path));
         }
 
         if (!$this->isWritable()) {
-            throw new UnexpectedTypeException(sprintf('"%" is not writable.', $path));
+            throw new FileException(sprintf('"%" is not writable.', $path));
         }
     }
 }

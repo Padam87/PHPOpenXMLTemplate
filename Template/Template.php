@@ -4,7 +4,7 @@ namespace PHPOpenXMLTemplate\Template;
 
 use \SplFileInfo;
 use \ZipArchive;
-use Symfony\Component\HttpFoundation\File\Exception\UnexpectedTypeException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use PHPOpenXMLTemplate\Configuration;
 
@@ -41,7 +41,7 @@ class Template extends AbstractTemplate implements TemplateInterface
 
         if (!in_array($this->getExtension(), array_keys(self::$MIME_TYPES))) {
             if (!in_array($this->getMimeType(), array_values(self::$MIME_TYPES))) {
-                throw new UnexpectedTypeException(sprintf('"%" is not a valid OpenXML file.', $path));
+                throw new FileException(sprintf('"%" is not a valid OpenXML file.', $path));
             }
         }
     }
@@ -57,7 +57,7 @@ class Template extends AbstractTemplate implements TemplateInterface
             $result = $zip->open($this->getPathname());
 
             if ($result !== true) {
-                throw new UnexpectedTypeException(sprintf('"%" is not a valid zip archive.', $this->getPathname()));
+                throw new FileException(sprintf('"%" is not a valid zip archive.', $this->getPathname()));
             }
 
             $content = new SplFileInfo($this->config->getTempDir()->getPathname() . DIRECTORY_SEPARATOR . $this->getBasename() . uniqid());
